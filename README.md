@@ -1,47 +1,42 @@
 # TLS Encryption Configuration Script
+
 These scripts streamline the creation of TLS certificates to ensure the security of **Cassandra**, **ElasticSearch**, **OpenSearch**, or **NATS** instances. They automate the entire process, encompassing the generation of a Root Certificate Authority (CA) certificate, node-specific certificates, and seamless certificate management tasks.
 
 ## Prerequisites
+
 - Ensure you have Administrator privileges to execute the scripts successfully.
-- Ensure that **openssl.exe** and **keytool.exe** are available on your system. 
+- Ensure that the **openssl** and the **keytool** executables are available on your system.
+
+> [!WARNING]
+>
+> We have noticed issues when using the keytool of a different Java version then the version used by Cassandra/Elastic/OpenSearch. For this reason we highly recommend to use the keytool executable of the Java installation used by Cassandra/Elastic/OpenSearch.
 
 ### Linux/Mac
-#### Openssl
-1. Open a terminal.
-2. Check the available OpenJDK versions
-   ```bash
-    apt search openjdk
-    ```
-4. Install the desired OpenJDK version
-    ```bash
-    sudo apt-get update
-    sudo apt-get install openjdk-[VERSION]-jdk
-     ```
-    
-#### Keytool
-1. If you already have OpenJDK installed and just need to ensure Keytool is available by running
 
-    ```bash
-    which keytool
-     ```
-     
-### Windows
 #### OpenSSL
-1. Check if OpenSSL is installed and retrieve its location by executing the command:
-    ```powershell
-    Get-Command openssl
-    ```
-   If it is not installed, consider installing it alongside with [Git](https://git-scm.com/downloads).
 
-    
-#### Keytool
-1. Check if Keytool is installed and retrieve its location by executing the command:
-    ```powershell
-    Get-Command keytool
+Linux should come with OpenSSL by default. You can verify this by running the following command:
+
+    ```bash
+    openssl version
     ```
-   If it is not installed, consider installing it alongside with [OpenJDK](https://openjdk.org/).
-   
-## Usage 
+
+#### keytool
+
+Keytool is automatically installed when installing Java, so it should be present on the system if you have Cassandra/ElasticSearch/OpenSearch installed.
+
+### Windows
+
+#### OpenSSL
+
+We have noticed issues with installing OpenSsl on windows. We found it the easiest to install [Git](https://git-scm.com/downloads) which ships an openssl executable with it. The executable can be found at `%programfiles%\git\usr\bin\openssl.exe`
+
+#### Keytool
+
+Keytool is shipped alongside with Java. ElasticSearchg and Cassandra installations on Windows also ship Java alongside. You can find the keytool executable at: `%programfiles%\ElasticOrCassandra\java\bin\keytool.exe`
+
+## Usage
+
 ### Running `generate-tls-certificates.sh` (Linux/Mac)
 
 1. Open a terminal.
@@ -62,19 +57,19 @@ These scripts streamline the creation of TLS certificates to ensure the security
 
 ### Running `generate-tls-certificates.ps1` (Windows)
 
-1. Open PowerShell.
+1. Open PowerShell as administrator.
 2. Navigate to the directory containing `generate-tls-certificates.ps1`.
 3. Execute the script:
 
     ```powershell
     .\generate-tls-certificates.ps1
     ```
-    
+
 > [!NOTE]
 > Ensure the necessary executables and prerequisites are in place before running the scripts.
 
-
 ## Features
+
 - **Organization Type:** Choose the instance type for which you want to generate certificates (Cassandra, Elastic, OpenSearch, NATS).
 - **Cleanup:** Option to clean up files generated in previous executions.
 - **Cluster Information:** Enter the name of your cluster and handle non-ASCII characters appropriately.
@@ -91,8 +86,10 @@ These scripts streamline the creation of TLS certificates to ensure the security
 - **Certificates Information:** Display information about the generated certificates, keystore files, and passwords.
 
 > [!IMPORTANT]
+>
 > - Ensure the root CA certificate (rootCA.crt) is trusted on every client. **If a password is generated, note it down for future reference.**
 > - Copy the generated keystore files (*-node-keystore.p12) to their respective nodes.
 
-## License:
+## License
+
 This script is provided under the [MIT License](https://github.com/SkylineCommunications/generate-tls-certificates/blob/main/LICENSE.md).
