@@ -17,9 +17,9 @@ These scripts streamline the creation of TLS certificates to ensure the security
 
 Linux should come with OpenSSL by default. You can verify this by running the following command:
 
-    ```bash
-    openssl version
-    ```
+```bash
+openssl version
+```
 
 #### keytool
 
