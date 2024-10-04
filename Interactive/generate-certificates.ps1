@@ -182,6 +182,7 @@ function Create-New-RootCA{
 	Write-Host "Generating the root certificate"
 	"[ req ]
 	distinguished_name  = req_distinguished_name
+	x509_extensions		= ext
 	prompt              = no
 	output_password     = `"$Password`"
 	default_bits        = $KeySize
@@ -190,7 +191,10 @@ function Create-New-RootCA{
 	C     = BE
 	O     = $Organization
 	CN    = rootCA
-	OU    = `"$ClusterName`"" | Out-File -Encoding "UTF8" rootCA.conf
+	OU    = `"$ClusterName`"
+	
+	[ ext ]
+	basicConstraints = critical,CA:TRUE" | Out-File -Encoding "UTF8" rootCA.conf
 
 	# Create a new Root CA certificate and store the private key in rootCA.key, public key in rootCA.crt
 	& "$openssl" "req" "-config" "rootCA.conf" "-new" "-x509" "-nodes" "-keyout" "rootCA.key" "-out" "rootCA.crt" "-days" "$Validity"
