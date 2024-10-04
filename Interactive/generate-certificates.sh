@@ -208,6 +208,7 @@ generate_root_certificate() {
     echo 'Generating new Root CA certificate'
     echo "[req]
     distinguished_name  = req_distinguished_name
+    x509_extensions		  = ext
     prompt              = no
     output_password     = \"$rootCAPassword\"
     default_bits        = $keySize
@@ -216,7 +217,10 @@ generate_root_certificate() {
     C     = BE
     O     = $organization
     CN    = rootCA
-    OU    = \"$clusterName\"" > generate_rootCA.conf
+    OU    = \"$clusterName\"
+
+    [ ext ]
+	  basicConstraints = critical,CA:TRUE" > generate_rootCA.conf
 
     openssl req -config generate_rootCA.conf -new -x509 -nodes -keyout $rootCAkey -out rootCA.crt -days $validity
     generate_password

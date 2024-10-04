@@ -238,6 +238,7 @@ generate_root_certificate() {
     cat > generate_rootCA.conf <<EOF
 [req]
 distinguished_name  = req_distinguished_name
+x509_extensions		  = ext
 prompt              = no
 output_password     = "$rootCAPassword"
 default_bits        = $keySize
@@ -247,6 +248,9 @@ C     = BE
 O     = $organization
 CN    = rootCA
 OU    = "$clusterName"
+
+[ ext ]
+basicConstraints = critical,CA:TRUE
 EOF
 
     openssl req -config generate_rootCA.conf -new -x509 -nodes -keyout $rootCAkeyInput -out rootCA.crt -days $validity
