@@ -66,17 +66,17 @@ class Config {
     [string] GetValidaty() {
 		$validityInput = ""
 		while($true){
-			$validityInput = Read-Host "How long (days) should the certificates remain valid? [Default: 365 days, Min: 30, Max: 3650]"
+			$validityInput = Read-Host "How long (days) should the certificates remain valid? [Default: 50 years, Min: 30, Max: 66612500 (50 years)]"
 			if($validityInput -eq ""){
-				$validityInput = "365"
+				$validityInput = "66612500"
 			}
 
 			# Check if integer
 			$validityInput = $validityInput -as [int]
 			if($validityInput -eq $null){
 				Write-Host -ForegroundColor red "Invalid input: Certificate validity should be an integer (days)"
-			}elseif($validityInput -lt 30 -or $validityInput -gt 3650){
-				Write-Host -ForegroundColor red "Invalid input: Certificate validity should be between 30 and 3650 days"
+			}elseif($validityInput -lt 30 -or $validityInput -gt 66612500){
+				Write-Host -ForegroundColor red "Invalid input: Certificate validity should be between 30 days and 50 years"
 			}else{
 				break
 			}
