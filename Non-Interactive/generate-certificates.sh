@@ -116,7 +116,7 @@ validate_certificate_validity() {
     echo -e "${RED}Invalid input:${NC} Certificate validity should be numeric (days)."
     exit 1
   elif [[ $validity -lt 30 || $validity -gt 66612500 ]]; then
-    echo -e "${RED}Invalid input:${NC} Certificate validity should be between 30 days and 3650 years."
+    echo -e "${RED}Invalid input:${NC} Certificate validity should be between 30 and 66612500 days (50 years)."
     exit 1
   fi
 }
