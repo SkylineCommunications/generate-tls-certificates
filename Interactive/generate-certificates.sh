@@ -75,14 +75,14 @@ get_cluster_info() {
 # Asking for certificate validity and verify
 get_certificate_options() {
   while true; do
-    read -p 'How long (days) should the certificates remain valid? [Default: 365 days, Min: 30, Max: 3650]? ' validity
-    validity=${validity:-365}
+    read -p 'How long (days) should the certificates remain valid? [Default: 50 years, Min: 30, Max: 66612500 (50 years)]? ' validity
+    validity=${validity:-66.612.500}
     re='^[0-9]+$'
   
     if ! [[ $validity =~ $re ]]; then
       echo -e "${RED}Invalid input:${NC} Certificate validity should be numeric (days)"
-    elif [[ $validity -le 29 || $validity -ge 3651 ]]; then
-      echo -e "${RED}Invalid input:${NC} Certificate validity should be between 30 and 3650 days"
+    elif [[ $validity -le 29 || $validity -ge 66612500 ]]; then
+      echo -e "${RED}Invalid input:${NC} Certificate validity should be between 30 days and 50 years"
     else
       break
     fi
