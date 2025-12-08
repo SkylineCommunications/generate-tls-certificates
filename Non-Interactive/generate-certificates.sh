@@ -9,7 +9,7 @@ NC="\033[0m"
 delete_files="y"
 organization="Cassandra"
 clusterName="DMS"
-validity=365
+validity=66612500
 keySize=4096
 generatePwd="y"
 useExisting="n"
@@ -26,7 +26,7 @@ usage() {
     -d  Delete previous files (y/n) [default: y]
     -o  Organization name [default: Cassandra]
     -c  Cluster name [default: DMS]
-    -v  Certificate validity in days [default: 365]
+    -v  Certificate validity in days [default: 50 years]
     -k  Key size [default: 4096]
     -g  Generate secure password (y/n) [default: y]
     -u  Use existing Root CA (y/n) [default: n]
@@ -115,8 +115,8 @@ validate_certificate_validity() {
   if ! [[ $validity =~ $re ]]; then
     echo -e "${RED}Invalid input:${NC} Certificate validity should be numeric (days)."
     exit 1
-  elif [[ $validity -lt 30 || $validity -gt 3650 ]]; then
-    echo -e "${RED}Invalid input:${NC} Certificate validity should be between 30 and 3650 days."
+  elif [[ $validity -lt 30 || $validity -gt 66612500 ]]; then
+    echo -e "${RED}Invalid input:${NC} Certificate validity should be between 30 days and 3650 years."
     exit 1
   fi
 }
