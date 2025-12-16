@@ -9,7 +9,7 @@ NC="\033[0m"
 delete_files="y"
 organization="Cassandra"
 clusterName="DMS"
-validity=66612500
+validity=18250
 keySize=4096
 generatePwd="y"
 useExisting="n"
@@ -115,8 +115,8 @@ validate_certificate_validity() {
   if ! [[ $validity =~ $re ]]; then
     echo -e "${RED}Invalid input:${NC} Certificate validity should be numeric (days)."
     exit 1
-  elif [[ $validity -lt 30 || $validity -gt 66612500 ]]; then
-    echo -e "${RED}Invalid input:${NC} Certificate validity should be between 30 and 66612500 days (50 years)."
+  elif [[ $validity -lt 30 || $validity -gt 18250 ]]; then
+    echo -e "${RED}Invalid input:${NC} Certificate validity should be between 30 and 18250 days (50 years)."
     exit 1
   fi
 }
