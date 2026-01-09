@@ -76,7 +76,7 @@ get_cluster_info() {
 get_certificate_options() {
   while true; do
     read -p 'How long (days) should the certificates remain valid? [Default: 50 years, Min: 30, Max: 18250 (50 years)]? ' validity
-    validity=${validity:-66.612.500}
+    validity=${validity:-18250}
     re='^[0-9]+$'
   
     if ! [[ $validity =~ $re ]]; then
@@ -293,7 +293,7 @@ generate_admin_certificate(){
 	distinguished_name  = req_distinguished_name
 	prompt              = no
 	output_password     = \"$rootCAPassword\"
-	default_bits        = $keysize
+	default_bits        = $keySize
 
 	[ req_distinguished_name ]
 	C     = BE
@@ -303,7 +303,7 @@ generate_admin_certificate(){
 
 
 	# generate new keypair
-	openssl genrsa -out admin_key.tmp $keysize
+	openssl genrsa -out admin_key.tmp $keySize
 
 	# convert to PKCS8 format
 	openssl pkcs8 -inform PEM -in admin_key.tmp -topk8 -nocrypt -v1 PBE-SHA1-3DES -out admin-key.pem
